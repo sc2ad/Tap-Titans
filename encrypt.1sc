@@ -1,0 +1,23 @@
+//010 Encryption script
+//--------------------------------------
+//--- 010 Editor v3.2 Script File
+//
+// File: encrypt
+// Author: cynosure
+// Revision: 1.0.7
+// Purpose: tap titans sha-1 checksum savefile encryption
+//--------------------------------------
+byte key[9];
+key[0]=7; key[1]=3; key[2]=2; key[3]=5; key[4]=4; key[5]=2; key[6]=5; key[7]=5; key[8]=3;
+int actfile = GetFileNum();
+int newfile = FileNew();
+FileSelect(actfile);
+int siz = FileSize();
+int place = 0; int addr = 0; int out = 0; uint data = 0;
+while(addr < siz){
+    FileSelect(actfile);
+    data = ReadByte(addr++);
+    FileSelect(newfile);
+    WriteByte(out, (data + key[out %9]) );
+    out++;
+}
